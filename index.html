@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HCM Central Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #ffffff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 60px;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 480px;
+    }
+
+    .login-container .logo {
+      margin-bottom: 20px;
+    }
+
+    .login-container .logo img {
+      max-width: 400px;
+      height: auto;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .login-container button {
+      background-color: #61CBF3; /* Security Bank green */
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin-top: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background-color: #074F69;
+    }
+
+    #home {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .top-bar h2 {
+      color: #3cbcad;
+      margin: 0;
+    }
+
+    .top-bar button {
+      background-color: #3cbcad;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .top-bar button:hover {
+      background-color: #2fa99c;
+    }
+
+    .dashboard-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .column-box {
+      padding: 20px;
+      border-radius: 15px;
+      min-width: 250px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .learning-column {
+      background-color: #a8eae3;
+    }
+
+    .attrition-column {
+      background-color: #ddd2bf;
+    }
+
+    .recruitment-column {
+      background-color: #b0d4f1;
+    }
+
+    .helpdesk-column {
+      background-color: #e4bfe9;
+    }
+
+    .column-box h3 {
+      color: #1a4f49;
+      margin-bottom: 12px;
+    }
+
+    .box {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      padding: 14px;
+      margin: 10px 0;
+      font-weight: bold;
+      text-decoration: none;
+      color: #2b7a78;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+
+    .box:hover {
+      transform: scale(1.05);
+    }
+
+    #dashboard-view {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    iframe {
+      width: 100%;
+      height: calc(100% - 60px);
+      border: none;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container" id="loginForm">
+    <div class="logo">
+      <img src="sbc_logo.png" alt="Security Bank Logo" />
+    </div>
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="login()">Log In</button>
+    <p id="errorMsg" style="color: red; font-size: 0.9em;"></p>
+  </div>
+
+  <div id="home">
+    <div class="top-bar">
+      <h2>Welcome! Select a Dashboard:</h2>
+      <button onclick="logout()">Log Out</button>
+    </div>
+    <div class="dashboard-wrapper">
+      <div class="column-box learning-column">
+        <h3>Learning and Academy</h3>
+        <a class="box" onclick="openEmbeddedDashboard(`eyJrIjoiNmRhYTcwZGEtZThjZS00MmI2LTg4MGEtMWMyZDQwMGMwN2Y1IiwidCI6ImViMThhMzQxLThiMzktNDJmNC1hMzY4LWJjYjM4NWU5NDIyZiIsImMiOjEwfQ%3D%3D`)">New Hire Learning Dashboard</a>
+        <a class="box" onclick="openDashboard('https://app.powerbi.com/view?r=learning2')">Regulatory Courses Dashboard</a>
+        <a class="box" onclick="openDashboard('https://app.powerbi.com/view?r=learning3')">LiL Pathways Dashboard</a>
+      </div>
+      <div class="column-box attrition-column">
+        <h3>Service Delivery</h3>
+        <a class="box" onclick="openDashboard('https://app.powerbi.com/view?r=attrition')">Bankwide Attrition Dashboard</a>
+        <a class="box" onclick="openDashboard('https://app.powerbi.com/view?r=toheadcountreport')">TO Headcount Report</a>
+      </div>
+      <div class="column-box recruitment-column">
+        <h3>Talent Acquisition</h3>
+        <a class="box" onclick="openDashboard('https://app.powerbi.com/view?r=recruitment')">Dashboard</a>
+      </div>
+      <div class="column-box helpdesk-column">
+        <h3>Employee Engagement</h3>
+        <a class="box" onclick="openDashboard('https://app.powerbi.com/view?r=helpdesk')">Dashboard</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="dashboard-view">
+    <div class="top-bar">
+      <button onclick="goHome()">Go Back to Home</button>
+    </div>
+    <iframe id="dashboardFrame" src=""></iframe>
+  </div>
+
+  <script>
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (username === "user" && password === "pass123") {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("home").style.display = "block";
+      } else {
+        errorMsg.textContent = "Invalid username or password.";
+      }
+    }
+
+    function logout() {
+      location.reload();
+    }
+
+    function openDashboard(url) {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("dashboard-view").style.display = "block";
+      document.getElementById("dashboardFrame").src = url;
+    }
+
+    function openEmbeddedDashboard(reportId) {
+      const baseUrl = "https://app.powerbi.com/view?r=";
+      document.getElementById("home").style.display = "none";
+      document.getElementById("dashboard-view").style.display = "block";
+      document.getElementById("dashboardFrame").src = baseUrl + reportId;
+    }
+
+    function goHome() {
+      document.getElementById("dashboard-view").style.display = "none";
+      document.getElementById("home").style.display = "block";
+      document.getElementById("dashboardFrame").src = "";
+    }
+  </script>
+
+</body>
+</html>
